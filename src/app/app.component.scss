@@ -1,0 +1,23 @@
+// src/app/app.component.scss
+.app-header,
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a.active {
+  font-weight: bold;
+}
+
+main {
+  padding: 2rem;
+}
