@@ -1,0 +1,15 @@
+// src/app/posts/posts.component.scss
+.posts {
+  max-width: 800px;
+  margin: 2rem auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}

@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button'
       <nav>
         <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
         <a mat-button routerLink="/about" routerLinkActive="active">About</a>
+        <a mat-button routerLink="/posts" routerLinkActive="active">Posts</a>
       </nav>
     </mat-toolbar>
     <main>
