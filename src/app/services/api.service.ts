@@ -1,7 +1,7 @@
-// src/app/services/api.service.ts
-import { Injectable, signal } from '@angular/core'
+// src/app/services/json-placeholder.service.ts
+import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { Observable, tap } from 'rxjs'
+import { Observable, catchError, throwError } from 'rxjs'
 
 export interface Post {
   userId: number
@@ -13,15 +13,26 @@ export interface Post {
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
-  // Signal para armazenar os posts
-  postsSignal = signal<Post[]>([])
+export class JsonPlaceholderService {
+  private API_URL = 'https://jsonplaceholder.typicode.com'
 
   constructor(private http: HttpClient) {}
 
-  fetchPosts(): Observable<Post[]> {
-    return this.http
-      .get<Post[]>('https://jsonplaceholder.typicode.com/posts')
-      .pipe(tap(posts => this.postsSignal.set(posts)))
+  getPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.API_URL}/posts`).pipe(
+      catchError(error => {
+        console.error('Erro ao buscar posts:', error)
+        return throwError(() => new Error('Erro ao buscar posts'))
+      })
+    )
+  }
+
+  getPost(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.API_URL}/posts/${id}`).pipe(
+      catchError(error => {
+        console.error(`Erro ao buscar post ${id}:`, error)
+        return throwError(() => new Error('Erro ao buscar post'))
+      })
+    )
   }
 }
