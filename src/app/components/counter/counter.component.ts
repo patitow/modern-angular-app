@@ -1,4 +1,3 @@
-// src/app/counter/counter.component.ts
 import { Component, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatButtonModule } from '@angular/material/button'
@@ -17,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button'
   styleUrls: ['./counter.component.scss'],
 })
 export class CounterComponent {
-  // Inicializa um signal com valor 0
   count = signal(0)
 
   increment(): void {
