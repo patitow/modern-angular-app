@@ -1,0 +1,8 @@
+<section class="posts">
+  <h2>Posts</h2>
+  <mat-progress-spinner *ngIf="loading()" mode="indeterminate"></mat-progress-spinner>
+  <div *ngIf="!loading() && !error()" class="posts-list">
+    <app-post-card *ngFor="let post of posts()" [post]="post"></app-post-card>
+  </div>
+  <p *ngIf="error()" class="error">{{ error() }}</p>
+</section>

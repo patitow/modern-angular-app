@@ -34,7 +34,7 @@
     <aside class="users-list">
       <h3>Lista de Usuários Criados</h3>
       <div class="users-container">
-        <mat-card *ngFor="let user of users()" class="user-card">
+        <mat-card *ngFor="let user of users(); let i = index" class="user-card">
           <mat-card-header>
             <mat-card-title>{{ user.name }}</mat-card-title>
             <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
@@ -42,6 +42,11 @@
           <mat-card-content>
             <p><strong>Endereço:</strong> {{ user.address }}</p>
           </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="removeUser(i)">
+              Remover
+            </button>
+          </mat-card-actions>
         </mat-card>
       </div>
     </aside>

@@ -1,4 +1,3 @@
-// src/app/posts/posts.component.ts
 import { Component, OnInit, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
@@ -9,26 +8,10 @@ import { PostCardComponent } from '../../components/post-card/post-card.componen
   selector: 'app-posts',
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule, PostCardComponent],
-  template: `
-    <section class="posts">
-      <h2>Posts</h2>
-
-      <!-- Spinner de carregamento -->
-      <mat-progress-spinner *ngIf="loading()" mode="indeterminate"></mat-progress-spinner>
-
-      <!-- Lista de posts em cartões -->
-      <div *ngIf="!loading() && !error()" class="posts-list">
-        <app-post-card *ngFor="let post of posts()" [post]="post"></app-post-card>
-      </div>
-
-      <!-- Mensagem de erro, se existir -->
-      <p *ngIf="error()" class="error">{{ error() }}</p>
-    </section>
-  `,
+  templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
-  // Sinais
   posts = signal<Post[]>([])
   loading = signal<boolean>(true)
   error = signal<string | null>(null)

@@ -1,3 +1,8 @@
+/**
+ * HomeComponent is responsible for displaying and managing a user creation form,
+ * listing created users, and persisting them in localStorage. It also demonstrates
+ * the usage of Angular signals in Angular 16+.
+ */
 import { Component, OnInit, signal } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms'
@@ -21,8 +26,19 @@ import { CounterComponent } from '../../components/counter/counter.component'
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  /**
+   * Reactive form instance for user input.
+   */
   demoForm!: FormGroup
+
+  /**
+   * Holds the name of the last submitted user.
+   */
   submittedName = signal<string>('')
+
+  /**
+   * Holds the list of created users.
+   */
   users = signal<
     Array<{
       name: string
@@ -31,8 +47,16 @@ export class HomeComponent implements OnInit {
     }>
   >([])
 
+  /**
+   * Initializes the form builder and sets up the component.
+   * @param fb - An instance of FormBuilder for creating the reactive form.
+   */
   constructor(private fb: FormBuilder) {}
 
+  /**
+   * Lifecycle hook that initializes the reactive form and attempts
+   * to load any existing users from localStorage.
+   */
   ngOnInit(): void {
     this.demoForm = this.fb.group({
       name: ['', Validators.required],
@@ -40,29 +64,40 @@ export class HomeComponent implements OnInit {
       address: [''],
     })
 
-    // (1) Carrega usuários salvos no localStorage (se existirem)
     const storedUsers = localStorage.getItem('users')
     if (storedUsers) {
-      // Se existir algo no localStorage, parse e joga na signal de usuários
       this.users.set(JSON.parse(storedUsers))
     }
   }
 
+  /**
+   * Submits the form, appends the new user to the list, saves it to localStorage,
+   * and resets the form.
+   */
   onSubmit(): void {
     if (this.demoForm.valid) {
       const user = this.demoForm.value
 
-      // Exibe nome para feedback ao usuário
       this.submittedName.set(user.name)
-
-      // Atualiza a lista de usuários em memória
       this.users.update(prev => [...prev, user])
 
-      // (2) Salva a lista atualizada no localStorage
       localStorage.setItem('users', JSON.stringify(this.users()))
-
-      // Reseta o form
       this.demoForm.reset()
     }
+  }
+
+  /**
+   * Removes a user from the users list by the given index and
+   * updates localStorage accordingly.
+   * @param index - Index of the user to be removed.
+   */
+  removeUser(index: number): void {
+    this.users.update(prev => {
+      const updated = [...prev]
+      updated.splice(index, 1)
+
+      localStorage.setItem('users', JSON.stringify(updated))
+      return updated
+    })
   }
 }
