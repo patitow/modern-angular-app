@@ -13,6 +13,21 @@
   gap: 1rem;
 }
 
+.users-list {
+  flex-grow: 4;
+}
+
+.users-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.user-card {
+  width: calc(50% - 1rem);
+}
+
 .full-width {
   width: 100%;
 }

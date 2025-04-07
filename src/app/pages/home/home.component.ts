@@ -22,9 +22,7 @@ import { CounterComponent } from '../../components/counter/counter.component'
 })
 export class HomeComponent implements OnInit {
   demoForm!: FormGroup
-
-  submittedName = signal<string | null>(null)
-
+  submittedName = signal<string>('')
   users = signal<
     Array<{
       name: string
